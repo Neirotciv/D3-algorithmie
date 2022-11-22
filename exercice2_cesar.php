@@ -5,9 +5,10 @@ $alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n
 $tableauTexte = [];
 
 // Chiffrement par le code César, en appliquant un décalage de +2 par rapport à l'alphabet
-function chiffrement(array $texte, array $alphabet): array {
+function chiffrement(array $texte, array $alphabet, bool $decrypt = false): array {
     $tableauChiffree = [];
-    
+    $decalage = $decrypt ? -2 : 2;
+
     // - 1 pour correspondre à l'index d'un tableau partant de 0
     $longueurAlphabet = count($alphabet) - 1;
     // Parcourir le tableau de char
@@ -18,7 +19,7 @@ function chiffrement(array $texte, array $alphabet): array {
             // Quand valeurs égales, rajouter + 2 char
             if ($texte[$i] == $alphabet[$j]) {
 
-                $position = $j + 2;
+                $position = $j + $decalage;
                 // Position du tableau + 2 > 25
                 if ($position > $longueurAlphabet) {
                     $position -= $longueurAlphabet;
@@ -31,34 +32,6 @@ function chiffrement(array $texte, array $alphabet): array {
         }
     }
     return $tableauChiffree;
-}
-
-function dechiffrement(array $texte, array $alphabet): array {
-    $tableauDechiffree = [];
-    
-    // - 1 pour correspondre à l'index d'un tableau partant de 0
-    $longueurAlphabet = count($alphabet) - 1;
-    // Parcourir le tableau de char
-    for ($i = 0; $i < count($texte); $i++) {
-        // Pour chaque char, rechercher la correspondance dans l'alphabet
-        for ($j = 0; $j < count($alphabet); $j++) {
-            
-            // Quand valeurs égales, enlever 2 char
-            if ($texte[$i] == $alphabet[$j]) {
-
-                $position = $j - 2;
-                // Position du tableau - 2 < 0
-                if ($position < 0) {
-                    // Décompte depuis la longueur de l'alphabet
-                    $position += $longueurAlphabet;
-                    $position -= 1;
-                }
-
-                $tableauDechiffree[$i] = $alphabet[$position];
-            }
-        }
-    }
-    return $tableauDechiffree;
 }
 
 function recupererTexte(array $tableau): string {
@@ -81,5 +54,5 @@ for ($i = 0; $i < strlen($texte); $i++) {
 $texteChiffree = chiffrement($tableauTexte, $alphabet);
 echo "Texte chiffré : " . recupererTexte($texteChiffree);
 echo "\n";
-$texteDechiffree = dechiffrement($texteChiffree, $alphabet);
+$texteDechiffree = chiffrement($texteChiffree, $alphabet, true);
 echo "Texte déchiffré : " . recupererTexte($texteDechiffree);

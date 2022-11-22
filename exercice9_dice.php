@@ -1,7 +1,7 @@
 <?php
 
 function rollTheDice() {
-    echo "Lancer les dés\n";
+    echo "Lancer les dés\ne";
     $yams = 0;
 
     for ($i = 0; $i < 5; $i++) {
