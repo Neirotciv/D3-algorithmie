@@ -8,15 +8,20 @@ $newEmployees = [
     ['nom5', 'prenom5', 600]
 ];
 
-
-// Ecriture du fichier csv
-$file = fopen('employees.csv', 'w');
-
-foreach ($newEmployees as $employee) {
-    fputcsv($file, $employee, ';');
+function arrayToCSV(array $data) {
+    $string="";
+    for ($i = 0; $i < count($data); $i++) {
+        for ($j = 0; $j < count($data[$i]); $j++) {
+            $string .= $data[$i][$j];
+            if ($j < count($data[$i]) - 1) {
+                $string .= ';';
+            } else {
+                $string .= "\n";
+            }
+        }
+    }
+    file_put_contents('employees.csv', $string);
 }
-
-fclose($file);
 
 function getCSVFromFile(string $file): array {
     return file($file, FILE_SKIP_EMPTY_LINES);
@@ -126,13 +131,15 @@ function printMedianSalary(array $wages): void {
     echo "Salaire médian : " . $higher[0];
 }
 
+arrayToCSV($newEmployees);
 $csv = getCSVFromFile('employees.csv');
 $employees = parseCSV($csv);
 
-echo getSalaryFromEmployee('prenom2', 'nom2', $employees);
+echo getSalaryFromEmployee('prenom2', 'nom2', $employees) . "\n";
 printLowerSalary($employees);
 echo "\n";
 printHigherSalary($employees);
 echo "\n";
 printAverageSalary(getWages($employees));
+echo "\n";
 printMedianSalary(getWages($employees));

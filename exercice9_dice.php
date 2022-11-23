@@ -1,19 +1,28 @@
 <?php
 
-function rollTheDice() {
-    echo "Lancer les dés\ne";
-    $yams = 0;
+function checkEquality(array $dices): bool {
+    $firstDice = $dices[0];
+    for ($i = 0; $i < count($dices); $i++) {
+        if ($firstDice != $dices[$i]) {
+            return false;
+        } 
+    }
+    return true;
+}
 
-    for ($i = 0; $i < 5; $i++) {
-        $result = rand(1, 5);
-        if ($result == 5) {
-            $yams++;
-        }
-        echo $result . ' ';
+function rollTheDice(): void {
+    echo "Lancer les dés\n";
+    $totalDices = 5;
+    $dices = [];
+
+    for ($i = 0; $i < $totalDices; $i++) {
+        $dice = rand(1, 2);
+        echo $dice . ' ';
+        $dices[] = $dice;
     }
 
-    if($yams == 5) {
-        echo "YAM'S !!!";
+    if (checkEquality($dices)) {
+        echo "YAM'S";
     }
 }
 
