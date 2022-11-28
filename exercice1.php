@@ -1,41 +1,45 @@
 <?php
-// RETROUVER LA PLUS PETITE VALEUR DANS UN TABLEAU
 
-// Déclaration d'un tableau de nombres à trier
-$nombres = [12, 1, 4, 9, 2, 29];
+/**
+ * Exercise 1 : Min / Max
+ * GET THE SMALLEST VALUE IN AN ARRAY
+ */
 
-function plusPetiteValeur($nombres) {
-	// N'ayant pas de valeurs à comparer, on choisi le premier élément du tableau
-	$plusPetitevaleur = $nombres[0];
-    
-	// Parcourir tout le tableau
-	for ($i = 0; $i < count($nombres); $i++) {
-		// Et comparer avec la plus petite valeur
-		if ($nombres[$i] < $plusPetitevaleur) {
-			// La plus petite valeur est remplacé par celle inférieur
-			$plusPetitevaleur = $nombres[$i];
+// Declare an array of numbers to extract a value from it
+$numbers = [12, 1, 4, 9, 29, 2];
+
+function getTheSmallestValue($numbers) {
+	// No values to compare, take temporary the first element of the array
+	$smallestValue = $numbers[0];
+												
+	for ($i = 0; $i < count($numbers); $i++) { 	// For all values in the array
+		if ($numbers[$i] < $smallestValue) { 	// Compare with the smallest value
+			$smallestValue = $numbers[$i]; 		// The smallest value is replaced by the lower one
 		}
 	}
-	// Le tableau est parcouru, et la plus petite valeur à été gardée en mémoire
-	return $plusPetitevaleur;
+	// For loop is done, the smallest value can be returned
+	return $smallestValue;
 }
 
-// RETROUVER LA PLUS GRANDE VALEUR DANS UN TABLEAU
+/**
+ * Exercise 1 : Min / Max
+ * GET TTHE GREATEST VALUE IN AN ARRAY
+ */
 
-function plusGrandeValeur($nombres) {
-	// N'ayant pas de valeurs à comparer, on choisi le premier élément du tableau
-	$plusGrandevaleur = $nombres[0];
+function getTheGreatestValue($numbers) {
+	// No values to compare, take temporary the first element of the array
+	$greatestValue = $numbers[0];
     
 	// Parcourir tout le tableau
-	for ($i = 0; $i < count($nombres); $i++) {
-		// Et comparer avec la plus petite valeur
-		if ($nombres[$i] > $plusGrandevaleur) {
-			// La plus petite valeur est remplacé par celle inférieur
-			$plusGrandevaleur = $nombres[$i];
+	for ($i = 0; $i < count($numbers); $i++) {	// For all values in the array
+		if ($numbers[$i] > $greatestValue) {	// Compare with the greatest value
+			$greatestValue = $numbers[$i];		// The greatest value is replaced by the greatest
 		}
 	}
-	// Le tableau est parcouru, et la plus petite valeur à été gardée en mémoire
-	return $plusGrandevaleur;
+	// For loop is done, the greatest value can be returned
+	return $greatestValue;
 }
 
-echo plusGrandeValeur($nombres);
+echo 'smallest value : ' . getTheSmallestValue($numbers);
+echo "\n";
+echo 'greatest value : ' . getTheGreatestValue($numbers);
