@@ -1,51 +1,50 @@
 <?php
+
 /**
- *  
+ * Exercise 2 : Chiffrement César
+ */
+
+/**
+ * Encrypt a text with an offset of +2 characters in the alphabet, can be decrypt
+ * with the $decrypt arg to true
  * 
- * 
- */ 
-// Chiffrement avec le code César
+ * @param array     $text       The text to encrypt or decrypt
+ * @param boolean   $decrypt    False by default, true for decrypt the text
+ * @return array The encrypted text 
+ */
+function encryption($text, $decrypt = false): array {
+    $alphabet = [' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+    $alphabetLength = count($alphabet) - 1; // - 1 to match the index of an array starting from 0
+    $outputText = [];
+    $offset = 2;
+    
+    if ($decrypt == true) { $offset = -2; }             // Change the offset to -2 if we want to decrypt
 
-$alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-$textArray = [];
-
-// Chiffrement par le code César, en appliquant un décalage de +2 par rapport à l'alphabet
-function encryption(array $text, array $alphabet, bool $decrypt = false): array {
-    $encrypted = [];
-    $offset = $decrypt ? -2 : 2;
-
-    // - 1 pour correspondre à l'index d'un tableau partant de 0
-    $alphabetLength = count($alphabet) - 1;
-    // Parcourir le tableau de char
+    // Read characters from the text
     for ($i = 0; $i < count($text); $i++) {
-        // Pour chaque char, rechercher la correspondance dans l'alphabet
+        // For each char, find the match in the alphabet
         for ($j = 0; $j < count($alphabet); $j++) {
-            
-            // Quand valeurs égales, rajouter pu retirer 2 char
-            if ($text[$i] == $alphabet[$j]) {
 
-                $position = $j + $offset;
-                // Position du tableau + 2 > 25
-                if ($position > $alphabetLength) {
+            if ($text[$i] == $alphabet[$j]) {           // When values ​​are equal, add or remove 2 char
+                $position = $j + $offset;               // Position in array + 2 or -2
+                if ($position > $alphabetLength) {      // If we exceed the length of the alphabet
                     $position -= $alphabetLength;
-                    // recommencer à partir de 0
-                    $position -= 1;
+                    $position -= 1;                     // Back to index 0
                 }
-
-                $encrypted[$i] = $alphabet[$position];
+                $outputText[$i] = $alphabet[$position]; // Get the char with offset
             }
         }
     }
-    return $encrypted;
+    return $outputText;
 }
 
 /**
- * arrayToString Get string from array, concatenate array elements
+ * Get string from array, concatenate array elements
  *
- * @param  array $array
+ * @param array $array
  * @return string
  */
-function arrayToString(array $array): string {
+function arrayCharToString(array $array): string {
     $string = '';
     for ($i = 0; $i < count($array); $i++) {
         $string .= $array[$i];
@@ -53,18 +52,29 @@ function arrayToString(array $array): string {
     return $string;
 }
 
-// Demander de saisir un texte
-echo "Saisir un texte : ";
-$text = readline();
-
-// Stocker le texte dans un tableau, lettre par lettre
-for ($i = 0; $i < strlen($texte); $i++) {
-    $textArray[$i] = $text[$i];
+/**
+ * Store text in an array, letter by letter
+ *
+ * @param string $text The text to turn into an array
+ * @return array An array of characters
+ */
+function textToArrayChar(string $text): array {
+    $array = [];
+    for ($i = 0; $i < strlen($text); $i++) {
+        $array[$i] = $text[$i];
+    }
+    return $array;
 }
 
-$encryptedText = encryption($textArray, $alphabet);
-echo "Texte chiffré : " . arrayToString($encryptedText);
+echo "Enter text : ";
+$text = readline();
+
+$textArray = textToArrayChar($text);
+
+$encryptedText = encryption($textArray);
+echo "Encrypted text : " . arrayCharToString($encryptedText);
 echo "\n";
-$decryptedText = encryption($encryptedText, $alphabet, true);
-echo "Texte déchiffré : " . arrayToString($decryptedText);
+
+$decryptedText = encryption($encryptedText, true);
+echo "Decrypted text : " . arrayCharToString($decryptedText);
 echo "\n";
