@@ -69,6 +69,7 @@ function textToArrayChar(string $text): array {
 echo "Enter text : ";
 $text = readline();
 
+// The text must be in an array
 $textArray = textToArrayChar($text);
 
 $encryptedText = encryption($textArray);
