@@ -1,25 +1,33 @@
 <?php
 
-// TRIER UN TABLEAU DE VALEURS POSITIVES
-$nombres = [12, 1, -2, 4, 9, 2, 29, -7];
-// Résultat à obtenir [1, 2, 4, 9, 12, 29]
+/**
+ * Exercise 7 : Tri de note
+ */
 
-function triCroissant($nombres) {
-    for ($i = 1; $i < count($nombres); $i++) {
-        // Tant que le tableau n'est pas trié
-        while ($nombres[$i] < $nombres[$i-1]) {
-            // Comparer lequel des 2 nombres est le plus grand
-            if ($nombres[$i] < $nombres[$i-1]) {
-                // Si c'est le cas, intervertir les 2 nombres
-                $min = $nombres[$i];
-                $nombres[$i] = $nombres[$i-1];
-                $nombres[$i-1] = $min;
+/**
+ * Sort an array of values, negative or not, in ascending order
+ *
+ * @param array $numbers The array of numbers to sort
+ * @return array The sorted array
+ */
+function sortAscending(array $numbers): array {
+    for ($i = 0; $i < count($numbers); $i++) {
+        // As long as the array is not sorted
+        while ($numbers[$i] < $numbers[$i-1]) {
+            // Compare which of the 2 numbers is greater
+            if ($numbers[$i] < $numbers[$i-1]) {
+                // If so, swap the 2 numbers with temp variable
+                $min = $numbers[$i];
+                $numbers[$i] = $numbers[$i-1];
+                $numbers[$i-1] = $min;
             }
-            // On contrôle de nouveau le tableau
-            $i = 1;
+            // Check the table again by returning the index to 1
+            $i = 0;
         }
     }
-    return $nombres;
+    return $numbers;
 }
 
-print_r(triCroissant($nombres));
+$numbers = [12, 1, -2, 4, 9, 2, 29, -7];
+print_r(sortAscending($numbers));
+// Result [-7, -2, 1, 2, 4, 9, 12, 29]
