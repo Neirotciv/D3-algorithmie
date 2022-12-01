@@ -1,13 +1,15 @@
 <?php
 
-$newEmployees = [
-    ['nom1', 'prenom1', 1200],
-    ['nom2', 'prenom2', 1400],
-    ['nom3', 'prenom3', 1300],
-    ['nom4', 'prenom4', 1500],
-    ['nom5', 'prenom5', 600]
-];
+/**
+ * Exercise 6 : Fichier CSV
+ */
 
+/**
+ * Undocumented function
+ *
+ * @param array $data
+ * @return void
+ */
 function arrayToCSV(array $data) {
     $string="";
     for ($i = 0; $i < count($data); $i++) {
@@ -94,7 +96,7 @@ function printAverageSalary(array $wages): void {
     }
 
     $average = $total / count($wages);
-    echo 'Moyenne des salaires ' . $average; 
+    echo 'Average salary ' . $average; 
 }
 
 function ascendingSort(array $values): array {
@@ -130,6 +132,14 @@ function printMedianSalary(array $wages): void {
 
     echo "Salaire médian : " . $higher[0];
 }
+
+$newEmployees = [
+    ['nom1', 'prenom1', 1200],
+    ['nom2', 'prenom2', 1400],
+    ['nom3', 'prenom3', 1300],
+    ['nom4', 'prenom4', 1500],
+    ['nom5', 'prenom5', 600]
+];
 
 arrayToCSV($newEmployees);
 $csv = getCSVFromFile('employees.csv');
