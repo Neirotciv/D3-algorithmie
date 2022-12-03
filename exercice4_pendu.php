@@ -102,6 +102,23 @@ function userCharInput(): string {
 }
 
 /**
+ * Compare two words, the words must be the same length
+ *
+ * @param array $firstWord
+ * @param array $secondWord
+ * @return boolean true if matching
+ */
+function isWordsEquals(array $firstWord, array $secondWord): bool {
+    for ($i = 0; $i < count($firstWord); $i++) {
+        if ($firstWord[$i] == $secondWord[$i]) {
+            continue;
+        }
+        return false;
+    }
+    return true;
+}
+
+/**
  * Check if a char exist in a word
  *
  * @param array $word
@@ -145,23 +162,6 @@ function completeTheWord(array $emptyWord, array $positions): array {
         $emptyWord[$key] = $value;
     }
     return $emptyWord;
-}
-
-/**
- * Compare two words, the words must be the same length
- *
- * @param array $firstWord
- * @param array $secondWord
- * @return boolean true if matching
- */
-function isWordsEquals(array $firstWord, array $secondWord): bool {
-    for ($i = 0; $i < count($firstWord); $i++) {
-        if ($firstWord[$i] == $secondWord[$i]) {
-            continue;
-        }
-        return false;
-    }
-    return true;
 }
 
 game();
