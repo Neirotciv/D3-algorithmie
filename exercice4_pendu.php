@@ -4,123 +4,164 @@
  * Exercise 4 : Jeu du pendu
  */
 
-// Remplir un tableau de _ de la longueur du mot
-function initMotVide(string $motADeviner): array {
-    $tableauMot = [];
-    
-    for ($i = 0; $i < strlen($motADeviner); $i++) {
-        $tableauMot[$i] = '_';
-    }
-    
-    return $tableauMot;
-}
-
-// Transformer le mot en tableau
-function initMot(string $motADeviner): array {
-    $tableauMot = [];
-    
-    for ($i = 0; $i < strlen($motADeviner); $i++) {
-        $tableauMot[$i] = $motADeviner[$i];
-    }
-    
-    return $tableauMot;
-}
-
-function afficherMot(array $tableauMot): string {
-    $mot = '';
-    for ($i = 0; $i < count($tableauMot); $i++) {
-        $mot .= $tableauMot[$i];
-    }
-    return $mot;
-}
-
-function afficherInfos(int $tentatives, array $mot): void {
-    echo "\n";
-    echo "Tentatives restante : " . $tentatives . "\n";
-    echo "Mot à deviner : " . afficherMot($mot) . "\n";
-}
-
-function sautDeLigne(): void {
-    echo "---------------------------";
-}
-
-// Saisie de la lettre par l'utilisateur
-function saisie(): string {
-    echo "Saisir une lettre : ";
-    $lettre = readline();
-    return $lettre;
-}
-
-// Controller la saisie
-function controlerLettre(array $motADeviner, string $lettre): array {
-    $positions = [];
-
-    for ($i = 0; $i < count($motADeviner); $i++) {
-        if ($motADeviner[$i] == $lettre) {
-            $positions[$i] = $lettre;
-        }
-    }
-
-    return $positions;
-}
-
-// Compléter le mot
-function completeMot(array $motADeviner, array $positionsLettres): array {
-    foreach($positionsLettres as $key => $value) {
-        $motADeviner[$key] = $value;
-    }
-    return $motADeviner;
-}
-
-function verifierSiGagne(array $motADeviner, array $motTableau): bool {
-    $count = 0;
-    for ($i = 0; $i < count($motADeviner); $i++) {
-        if ($motADeviner[$i] == $motTableau[$i]) {
-            $count++;
-        }
-    }
-    if ($count == count($motADeviner)) {
-        return true;
-    }
-    return false;
-}
-
-function jeu() {
-    global $dessins;
-
-    $tentatives = 10;
+function game() {
+    $char = '';
+    $word = 'developpeur';
+    $attempt = 10;
     $loop = true;
-    $lettre = '';
 
-    $mot = 'developpeur';
-    $motADeviner = initMotVide($mot);
-    $motTableau = initMot($mot);
-
+    // The word that the player will have to complete in the form of _ _ _ _
+    $userWord = wordToArray(wordToUnderscore($word)); 
+    $wordToGuess = wordToArray($word);
+    
     do {
-        afficherInfos($tentatives, $motADeviner);
-        $lettre = saisie();
-        sautDeLigne();
+        echo "\n";
+        echo "Tentatives restante : " . $attempt . "\n";
+        echo "Mot à deviner : " . arrayToString($userWord) . "\n";
 
-        $positions = controlerLettre($motTableau, $lettre);
+        $char = userCharInput();
+        $matchingCharacters = getPositionsOfCharInWord($wordToGuess, $char);
 
-        // La lettre existe
-        if (count($positions) > 0) {
-            $motADeviner = completeMot($motADeviner, $positions);
+        if (count($matchingCharacters) > 0) {
+            // If the letter has already been found, too bad for the player
+            if (isCharExistInWord($userWord, $char)) {
+                $attempt--;
+            } else {
+                $userWord = completeTheWord($userWord, $matchingCharacters);
+            }
         } else {
-            $tentatives--;
+            $attempt--;
         }
 
-        $gagner = verifierSiGagne($motADeviner, $motTableau);
-
-        if ($gagner) {
-            echo "\nYou have won\n";            
+        if (isWordsEquals($wordToGuess, $userWord)) {
+            echo "\nLe mot était bien " . $word;
+            echo "\nVous avez gagné !\n";
             $loop = false;
         }
-        if ($tentatives < 1) {
-            echo "\nYou lost\n";  
+
+        if ($attempt < 0) {
+            echo "\nLe mot à deviner était " . $word;
+            echo "\nVous avez perdu :(\n";
             $loop = false;
         }
     } while ($loop);
 }
 
-jeu();
+
+/**
+ * Return the word convert with a '_' instead of the chars
+ *
+ * @param string $word
+ * @return string The word with _
+ */
+function wordToUnderscore(string $word): string {
+    $convertedWord = '';
+    for ($i = 0; $i < strlen($word); $i++) {
+        $convertedWord .= '_';
+    }
+    return $convertedWord;
+}
+
+/**
+ * The word is stored char by char in an array
+ *
+ * @param string $word
+ * @return array 
+ */
+function wordToArray(string $word): array {
+    $arrayWord = [];
+    for ($i = 0; $i < strlen($word); $i++) {
+        $arrayWord[$i] = $word[$i];
+    }
+    return $arrayWord;
+}
+
+/**
+ * Concatenate array values ​​to get a string word
+ *
+ * @param array $charsArray An array containing characters
+ * @return string 
+ */
+function arrayToString(array $charsArray): string {
+    $word = '';
+    for ($i = 0; $i < count($charsArray); $i++) {
+        $word .= $charsArray[$i];
+    }
+    return $word;
+}
+
+/**
+ * Returns the char entered by the user
+ *
+ * @return string
+ */
+function userCharInput(): string {
+    echo "Saisir une lettre : ";
+    $char = readline();
+    return $char;
+}
+
+/**
+ * Check if a char exist in a word
+ *
+ * @param array $word
+ * @param string $char
+ * @return boolean
+ */
+function isCharExistInWord(array $word, string $char): bool {
+    $array = getPositionsOfCharInWord($word, $char);
+    if (count($array) != 0) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Returns an array of char positions in a word
+ *
+ * @param array $word
+ * @param string $char The char to look for in the word
+ * @return array
+ */
+function getPositionsOfCharInWord(array $word, string $char): array {
+    $positions = [];
+    for ($i = 0; $i < count($word); $i++) {
+        if ($word[$i] == $char) {
+            $positions[$i] = $char;
+        }
+    }
+    return $positions;
+}
+
+/**
+ * Complete the empty word from the char positions
+ *
+ * @param array $emptyWord
+ * @param array $positions
+ * @return array The word with the new char
+ */
+function completeTheWord(array $emptyWord, array $positions): array {
+    foreach($positions as $key => $value) {
+        $emptyWord[$key] = $value;
+    }
+    return $emptyWord;
+}
+
+/**
+ * Compare two words, the words must be the same length
+ *
+ * @param array $firstWord
+ * @param array $secondWord
+ * @return boolean true if matching
+ */
+function isWordsEquals(array $firstWord, array $secondWord): bool {
+    for ($i = 0; $i < count($firstWord); $i++) {
+        if ($firstWord[$i] == $secondWord[$i]) {
+            continue;
+        }
+        return false;
+    }
+    return true;
+}
+
+game();
