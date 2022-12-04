@@ -21,7 +21,7 @@ function sortAscending(array $numbers): array {
                 $numbers[$i] = $numbers[$i-1];
                 $numbers[$i-1] = $min;
             }
-            // Check the table again by returning the index to 1
+            // Check the table again by returning the index to 0
             $i = 0;
         }
     }

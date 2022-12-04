@@ -1,13 +1,11 @@
 <?php
 
 /**
- * Le joueur commence la partie
- * Perdu quand lorsque l'on doit prendre le dernier bâtonnet
+ * Jeu des bâtonnets
  */
 
-$batonnets = 20;
-$joueur = true;
+// Player takes sticks between 1 and 3
 
-function afficheInfos() {
+// IA takes sticks 
 
-}
+$sticks = 20;

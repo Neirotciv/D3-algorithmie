@@ -17,14 +17,16 @@ function encryption($text, $decrypt = false): array {
     $alphabetLength = count($alphabet) - 1; // - 1 to match the index of an array starting from 0
     $outputText = [];
     $offset = 2;
-    
-    if ($decrypt == true) { $offset = -2; }             // Change the offset to -2 if we want to decrypt
+
+    // Change the offset to -2 if we want to decrypt
+    if ($decrypt == true) { 
+        $offset = -2; 
+    }             
 
     // Read characters from the text
     for ($i = 0; $i < count($text); $i++) {
         // For each char, find the match in the alphabet
         for ($j = 0; $j < count($alphabet); $j++) {
-
             if ($text[$i] == $alphabet[$j]) {           // When values ​​are equal, add or remove 2 char
                 $position = $j + $offset;               // Position in array + 2 or -2
                 if ($position > $alphabetLength) {      // If we exceed the length of the alphabet

@@ -47,7 +47,6 @@ function game() {
     } while ($loop);
 }
 
-
 /**
  * Return the word convert with a '_' instead of the chars
  *
