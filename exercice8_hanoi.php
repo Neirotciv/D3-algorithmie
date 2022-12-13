@@ -1,7 +1,7 @@
 <?php
 
 // TOUR DE HANOI
-// Chaque 
+
 $towers = [
     [1, 2, 3, 4],   // 0 - Départ
     [0, 0, 0, 0],   // 1 - Intermédiaire
@@ -18,7 +18,7 @@ $towers = [
  */
 function checkTower(array $tower): bool {
     for ($i = 0; $i < count($tower); $i++) {
-        if ($tower[$i] != 0) {
+        if ($i != 0 && $tower[$i] > $tower[$i-1]) {
             return false;
         }
     }
@@ -67,30 +67,8 @@ function moveDisk(array $towers, int $start, int $end, int $disk): array {
     return $towers;
 }
 
-function isTowerOk(array $tower): bool {
-    return true;
-}
+print_r($towers);
 
+$towers = moveDisk($towers, 0, 2, 4);
 
 print_r($towers);
-$count = 0;
-do {
-    echo "TOUR " . $count . "\n";
-    
-    for ($i = 0; $i < 2; $i++) {
-
-        $topDisk = getTopDisk($towers[$i]);
-
-        for ($j = 0; $j < 2; $j++) {
-
-            $isEmpty = checkTower($towers[$j]);
-
-            if ($isEmpty) {
-                $towers = moveDisk($towers, $i, $j, $topDisk);
-            }
-        }
-    }
-
-    $count++;
-    print_r($towers);
-} while ($count < 5);

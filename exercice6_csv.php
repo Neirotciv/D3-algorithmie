@@ -33,7 +33,7 @@ displayAverageSalary(getSalaries($employees));
 echo "\n";
 
 displayMedianSalary(getSalaries($employees));
-
+echo "\n";
 
 /**
  * Converts an array of values ​​to CSV format
@@ -187,7 +187,7 @@ function displayAverageSalary(array $salaries): void {
         $total += $salary;
     }
     $average = $total / count($salaries);
-    echo 'Salaire moyen ' . $average; 
+    echo 'Salaire moyen : ' . $average . "€"; 
 }
 
 /**
@@ -211,7 +211,7 @@ function displayMedianSalary(array $salaries): void {
             $higher[] = $sortedSalaries[$i];
         }
     }
-    echo "Salaire médian : " . $higher[0];
+    echo "Salaire médian : " . $higher[0] . "€";
 }
 
 /**
@@ -222,17 +222,19 @@ function displayMedianSalary(array $salaries): void {
  */
 function sortAscending(array $numbers): array {
     for ($i = 0; $i < count($numbers); $i++) {
-        // As long as the array is not sorted
-        while ($numbers[$i] < $numbers[$i-1]) {
-            // Compare which of the 2 numbers is greater
-            if ($numbers[$i] < $numbers[$i-1]) {
-                // If so, swap the 2 numbers with temp variable
-                $min = $numbers[$i];
-                $numbers[$i] = $numbers[$i-1];
-                $numbers[$i-1] = $min;
+        if ($i > 0) {
+            // As long as the array is not sorted
+            while ($numbers[$i] < $numbers[$i-1]) {
+                // Compare which of the 2 numbers is greater
+                if ($numbers[$i] < $numbers[$i-1]) {
+                    // If so, swap the 2 numbers with temp variable
+                    $min = $numbers[$i];
+                    $numbers[$i] = $numbers[$i-1];
+                    $numbers[$i-1] = $min;
+                }
+                // Check the table again by returning the index to 1
+                $i = 1;
             }
-            // Check the table again by returning the index to 0
-            $i = 0;
         }
     }
     return $numbers;
