@@ -3,9 +3,9 @@
 // TOUR DE HANOI
 
 $towers = [
+    [0, 0, 0, 0],   // 1 - Intermédiaire/Arrivée
     [1, 2, 3, 4],   // 0 - Départ
-    [0, 0, 0, 0],   // 1 - Intermédiaire
-    [0, 0, 0, 0]    // 2 - Arrivée
+    [0, 0, 0, 0]    // 2 - Intermédiaire/Arrivée
 ];
 
 
@@ -24,7 +24,6 @@ function checkTower(array $tower): bool {
     }
     return true;
 }
-
 
 /**
  * checkTopDisk Parcours le tableau de la fin au début
@@ -65,6 +64,19 @@ function moveDisk(array $towers, int $start, int $end, int $disk): array {
         }
     }
     return $towers;
+}
+
+/**
+ * Vérifier si la valeur est plus petite
+ * si = 0, positionnement possible
+ */
+function checkIfMovable($tower, $disk) {
+    // Partir de la fin
+    for ($i = 0; count($tower); $i++) {
+        if ($i == 0) {
+            
+        } 
+    }
 }
 
 print_r($towers);
