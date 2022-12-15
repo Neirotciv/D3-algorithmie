@@ -14,7 +14,7 @@ $newEmployees = [
 
 // Working on the CSV file, writing and reading
 arrayToCSVFile($newEmployees, 'employees.csv');
-$csv = getCSVFromFile('employees.csv');
+$csv = file('employees.csv', FILE_SKIP_EMPTY_LINES);
 $employees = parseCSV($csv);
 
 echo "\n";
@@ -58,16 +58,6 @@ function arrayToCSVFile(array $data, string $filename) {
         }
     }
     file_put_contents($filename, $string);
-}
-
-/**
- * Retrieve the contents of a CSV file
- *
- * @param string $filename The filename with extension
- * @return array Look like [value1;value2;value3]
- */
-function getCSVFromFile(string $filename): array {
-    return file($filename, FILE_SKIP_EMPTY_LINES);
 }
 
 /**
