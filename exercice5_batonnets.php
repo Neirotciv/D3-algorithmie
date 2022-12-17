@@ -21,5 +21,5 @@ do {
     echo "Ordinateur " . $botPickedUp . "\n";
     $sticks -= $botPickedUp;
 
-    echo "L'ordinateur a gagné";
 } while($sticks != 0);
+echo "L'ordinateur a gagné";
